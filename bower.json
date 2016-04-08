@@ -1,0 +1,19 @@
+{
+  "name": "vsuleymanov",
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5",
+    "pixi.js": "pixi#^3.0.11"
+  }
+}
