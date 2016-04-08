@@ -4,14 +4,16 @@ module.exports = function(grunt) {
     grunt.initConfig({
         jshint: {
             main: {
-                files: []
+                src: [
+                    'js/engine/s1_pixi.js'
+                ]
             }
         },
         concat: {
             main: {
                 src: [
-                    'js/libs/jquery.js',
-                    'js/mylibs/**/*.js'  // Все JS-файлы в папке
+                    'bower_components/pixi.js/bin/pixi.js',
+                    'js/engine/*.js'  // Все JS-файлы в папке
                 ],
                 dest: 'build/scripts.js'
             }
@@ -33,5 +35,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
 
     // Задача по умолчанию
-    grunt.registerTask('default', ['jshint', 'concat', 'uglify']);
+    grunt.registerTask('default', ['jshint']);
+    grunt.registerTask('release', ['jshint', 'concat', 'uglify']);
 };
