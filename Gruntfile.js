@@ -14,13 +14,13 @@ module.exports = function(grunt) {
                     'bower_components/pixi.js/bin/pixi.js',
                     'js/engine/*.js'
                 ],
-                dest: 'build/scripts.js'
+                dest: 'js/build/scripts.js'
             }
         },
         uglify: {
             main: {
                 files: {
-                    'build/scripts.min.js': '<%= concat.main.dest %>'
+                    'js/build/scripts.min.js': '<%= concat.main.dest %>'
                 }
             }
         }
