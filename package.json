@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "repository": "https://github.com/s1im05/s1_pixi",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "bower cache clean && bower install && grunt release"
   },
   "author": "",
   "license": "MIT",
