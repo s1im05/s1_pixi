@@ -1,4 +1,5 @@
 (function(w, u){
+    // test
     var s1_pixi = function(id, options){
         
         var defaults    = {
