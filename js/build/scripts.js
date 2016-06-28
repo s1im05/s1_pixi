@@ -7611,23 +7611,84 @@ if(!(global.performance&&global.performance.now)){var startTime=Date.now();if(!g
 var lastTime=Date.now();var vendors=['ms','moz','webkit','o'];for(var x=0;x<vendors.length&&!global.requestAnimationFrame;++x){global.requestAnimationFrame=global[vendors[x]+'RequestAnimationFrame'];global.cancelAnimationFrame=global[vendors[x]+'CancelAnimationFrame']||global[vendors[x]+'CancelRequestAnimationFrame'];}if(!global.requestAnimationFrame){global.requestAnimationFrame=function(callback){if(typeof callback!=='function'){throw new TypeError(callback+'is not a function');}var currentTime=Date.now(),delay=16+lastTime-currentTime;if(delay<0){delay=0;}lastTime=currentTime;return setTimeout(function(){lastTime=Date.now();callback(performance.now());},delay);};}if(!global.cancelAnimationFrame){global.cancelAnimationFrame=function(id){clearTimeout(id);};}}).call(this,typeof global!=="undefined"?global:typeof self!=="undefined"?self:typeof window!=="undefined"?window:{});},{}]},{},[115])(115);});//# sourceMappingURL=pixi.js.map
 'use strict';
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-/*jshint esversion: 6 */
-(function (w, u) {
-    var s1_pixi = function s1_pixi(id, options) {
+var s1_pixi = function () {
+    function s1_pixi(id, options) {
         _classCallCheck(this, s1_pixi);
 
         var defaults = {
             width: 640,
-            height: 480
+            height: 480,
+            background: 0x000000
         };
 
         this.id = id;
         this.options = Object.assign(defaults, options);
-    };
+        this.el = document.getElementById(id);
 
-    w.s1_pixi = s1_pixi;
-})(window);
+        if (this.el === null) {
+            throw new Error('Can\'t find container');
+        } else {
+            this.resize()._pixiInit();
+        }
+    }
 
-console.log(new s1_pixi('my_canvas', { width: 100 }));
+    _createClass(s1_pixi, [{
+        key: 'resize',
+        value: function resize() {
+            this.el.style.width = this.options.width + 'px';
+            this.el.style.height = this.options.height + 'px';
+
+            return this;
+        }
+    }, {
+        key: '_pixiInit',
+        value: function _pixiInit() {
+            this.renderer = PIXI.autoDetectRenderer(this.options.width, this.options.height, { backgroundColor: this.options.background });
+            this.el.appendChild(this.renderer.view);
+            this.stage = new PIXI.Container();
+
+            this._fps = {
+                text: new PIXI.Text('0 fps', { font: '12px Arial', fill: 0xcccccc }),
+                count: 0,
+                timestamp: new Date().getTime()
+            };
+            this._fps.text.position.x = 5;
+            this._fps.text.position.y = 5;
+
+            this.stage.addChild(this._fps.text);
+
+            return this;
+        }
+    }, {
+        key: 'start',
+        value: function start() {
+            requestAnimationFrame(this._update.bind(this));
+
+            return this;
+        }
+    }, {
+        key: '_update',
+        value: function _update() {
+            this._countFps();
+
+            this.renderer.render(this.stage);
+            requestAnimationFrame(this._update.bind(this));
+        }
+    }, {
+        key: '_countFps',
+        value: function _countFps() {
+            this._fps.count++;
+            if (new Date().getTime() - this._fps.timestamp >= 1000) {
+                this._fps.timestamp = new Date().getTime();
+                this._fps.text.text = this._fps.count + ' fps';
+                this._fps.count = 0;
+            }
+        }
+    }]);
+
+    return s1_pixi;
+}();

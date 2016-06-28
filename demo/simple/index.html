@@ -2,9 +2,16 @@
 <html>
 <head>
     <title>Engine Test</title>
-    <script src="../../js/build/scripts.js" defer="defer"></script>
+    <script src="../../bower_components/pixi.js/bin/pixi.js"></script>
+    <script src="../../js/src/engine/s1_pixi.js"></script>
 </head>
 <body>
     <div id="my_canvas"></div>
+
+    <script type="text/javascript">
+        let s1  = new s1_pixi('my_canvas', {width: 800, height: 600, showFps: true});
+
+        s1.start();
+    </script>
 </body>
 </html>

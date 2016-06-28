@@ -1,6 +1,6 @@
 # Requirements
 
-1. NPM
+NPM (https://www.npmjs.com)
 
 # Install
 ```
