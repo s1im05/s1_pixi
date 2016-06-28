@@ -39,21 +39,38 @@ class s1_pixi{
         this._fps.text.position.x   = 5;
         this._fps.text.position.y   = 5;
 
-        if (this.options.showFps)
+        if (this.options.showFps){
             this.stage.addChild(this._fps.text);
+        }
 
         return this;
     };
 
     start(){
+        this.onPause    = false;
         requestAnimationFrame(this._update.bind(this));
 
         return this;
     };
 
+    pause(){
+        this.onPause    = true;
+    }
+
+    resume(){
+        this.start();
+    }
+
     _update(){
-        if (this.options.showFps)
+        if (this.onPause){
+            return;
+        }
+
+        ////// do all stuff here
+
+        if (this.options.showFps){
             this._countFps();
+        }
 
         this.renderer.render(this.stage);
         requestAnimationFrame(this._update.bind(this));
