@@ -7622,7 +7622,8 @@ var s1_pixi = function () {
         var defaults = {
             width: 640,
             height: 480,
-            background: 0x000000
+            background: 0x000000,
+            showFps: false
         };
 
         this.id = id;
@@ -7659,21 +7660,42 @@ var s1_pixi = function () {
             this._fps.text.position.x = 5;
             this._fps.text.position.y = 5;
 
-            this.stage.addChild(this._fps.text);
+            if (this.options.showFps) {
+                this.stage.addChild(this._fps.text);
+            }
 
             return this;
         }
     }, {
         key: 'start',
         value: function start() {
+            this.onPause = false;
             requestAnimationFrame(this._update.bind(this));
 
             return this;
         }
     }, {
+        key: 'pause',
+        value: function pause() {
+            this.onPause = true;
+        }
+    }, {
+        key: 'resume',
+        value: function resume() {
+            this.start();
+        }
+    }, {
         key: '_update',
         value: function _update() {
-            this._countFps();
+            if (this.onPause) {
+                return;
+            }
+
+            ////// do all stuff here
+
+            if (this.options.showFps) {
+                this._countFps();
+            }
 
             this.renderer.render(this.stage);
             requestAnimationFrame(this._update.bind(this));
